@@ -1,1 +1,10 @@
+---
+  - name: s3 test DH
+    hosts: localhost
+    connection: local
 
+    tasks:
+      - name: Creating a new bucket
+        aws_s3:
+          bucket: bucketdorio
+          mode: create
