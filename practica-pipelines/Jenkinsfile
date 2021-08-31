@@ -7,7 +7,6 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                //echo 'Building..'
                 sh 'mvn -B -DskipTests clean package'
             }
         }
@@ -20,6 +19,13 @@ pipeline {
             steps {
                 echo 'Deploying....'
             }
+        }
+    }
+
+    post {
+        success {
+            archiveArtifacts artifacts: 'build/libs/**/*.jar', fingerprint: true
+            //junit 'build/reports/**/*.xml'
         }
     }
 }
