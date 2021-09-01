@@ -13,7 +13,7 @@
           ports:
           - 443
           - 80
-          - 22
+          - 23
           - 8080
           cidr_ip: 0.0.0.0/0
           rule_desc: Acepto todo el trafico
@@ -26,13 +26,13 @@
         Name: Instancia_Profe
       wait: yes
       wait_timeout: 500
-      group: sg_profe
+      group: grupo_creado
       volumes:
         - device_name: /dev/xvda
           volume_type: gp2
           volume_size: 8
       vpc_subnet_id: subnet-82bceedd
-      assign_public_ip: yes
+      assign_public_ip: no
       key_name: pepekey
     register: info
   - name: DNS Publico de nuestro servidor
