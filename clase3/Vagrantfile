@@ -31,6 +31,10 @@ Vagrant.configure("2") do |config|
 	  sudo apt-get install python3-pip -y
 	  pip3 install boto3
 	  pip3 install boto
+	  curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+          sudo apt-add-repository "deb [arch=$(dpkg --print-architecture)] https://apt.releases.hashicorp.com/ $(lsb_release -cs) main"
+          sudo apt install terraform
+          sudo apt install net-tools
     SHELL
   end  
 end
