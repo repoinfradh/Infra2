@@ -48,7 +48,7 @@ public class AdderTest {
 
     @Test
     public void whenTwoPositives_ThenSumIsCorrect() {
-        assertEquals(3, adder.add(2, 2));
+        assertEquals(4, adder.add(2, 2));
     }
 
     @Test
