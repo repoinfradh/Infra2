@@ -16,7 +16,7 @@ pipeline {
             steps {
                 dir ('maven-adderapp') {
                     sh "mvn test"
-                    junit 'surefire-reports/*.xml'
+                    junit 'target/surefire-reports/*.xml'
                 }
             }
         }
