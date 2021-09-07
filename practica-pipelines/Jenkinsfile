@@ -22,7 +22,6 @@ pipeline {
         stage('Deploy') {
             steps {
 
-
                 echo 'Deploying....'
             }
         }
@@ -36,7 +35,29 @@ pipeline {
         }
         success {
             dir ('maven-adderapp') {
-              archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+                script {
+                    pom = readMavenPom file: "pom.xml";
+
+                    nexusArtifactUploader(
+                        nexusVersion: "3.33.1-01",
+                        protocol: "http",
+                        nexusUrl: "10.0.0.2",
+                        groupId: pom.groupId,
+                        version: pom.version,
+                        repository: "maven-jenkins",
+                        credentialsId: "nexus",
+                        artifacts: [
+                            [artifactId: pom.artifactId,
+                            classifier: '',
+                            file: artifactPath,
+                            type: pom.packaging],
+                            [artifactId: pom.artifactId,
+                            classifier: '',
+                            file: "pom.xml",
+                            type: "pom"]
+                        ]
+                    );
+                }
             }
         }
     }
