@@ -21,8 +21,23 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-
-                echo 'Deploying....'
+                dir('maven-adderapp') {
+                    script{
+                        pom = readMavenPom file: "pom.xml";
+                        files = findFiles(glob: "target/*.${pom.packaging}");
+                        env.file = files[0].path;
+                    }
+                }
+                
+                sh "cp maven-adderapp/$file server/holamundo.jar"
+                
+                dir ('server') {
+                    sh """
+                        docker rm -f server || true
+                        docker build . -t server
+                        docker container run -d --name server --publish 3001:80 server
+                    """
+                }
             }
         }
     }
